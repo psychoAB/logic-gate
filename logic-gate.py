@@ -47,7 +47,6 @@ class LogicGateGameWindow(arcade.Window):
     def on_mouse_press(self, x, y, button, modifiers):
         if button == arcade.MOUSE_BUTTON_LEFT:
             self.dragging = True
-            #print(str(x) + " " + str(y))
 
             for main_gate_sprite in self.main_gate_sprites:
                 if main_gate_sprite != None:

@@ -110,9 +110,6 @@ class OrGateSprite(SpriteModel):
         if not self.is_right_input_plugged:
             self.right_input = 0
 
-        print(str(self.get_output()) + " " + str(self.left_input) + " " + str(self.right_input))
-        print(len(self.world.gate_sprites))
-
     def input_plugged(self, plugged_gate):
         if self.is_point_intersect_with_output_of_gate(self.center_x_left_input, self.center_y_input, plugged_gate):
             self.left_input = plugged_gate.output
