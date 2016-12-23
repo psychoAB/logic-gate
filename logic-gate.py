@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import arcade
-from gate import INPUT_GATE, OUTPUT_GATE, NOT_GATE, OR_GATE, IMAGE_FILENAME, InputGateSprite, OutputGateSprite, NotGateSprite, OrGateSprite
+from gate import INPUT_GATE, OUTPUT_GATE, NOT_GATE, AND_GATE, OR_GATE, IMAGE_FILENAME, InputGateSprite, OutputGateSprite, NotGateSprite, AndGateSprite, OrGateSprite
 
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 600
@@ -17,12 +17,14 @@ class LogicGateGameWindow(arcade.Window):
         main_input_gate = InputGateSprite(x = 50, y = 100, world = self)
         main_output_gate = OutputGateSprite(x = 125, y = 89, world = self)
         main_not_gate = NotGateSprite(x = 200, y = 100, world = self)
-        main_or_gate = OrGateSprite(x = 275, y = 89, world = self)
+        main_and_gate = AndGateSprite(x = 275, y = 100, world = self)
+        main_or_gate = OrGateSprite(x = 350, y = 89, world = self)
 
         self.main_gate_sprites = [None, None, None, None, None]
         self.main_gate_sprites[INPUT_GATE] = main_input_gate
         self.main_gate_sprites[OUTPUT_GATE] = main_output_gate
         self.main_gate_sprites[NOT_GATE] = main_not_gate
+        self.main_gate_sprites[AND_GATE] = main_and_gate
         self.main_gate_sprites[OR_GATE] = main_or_gate
 
         self.dragging = False
@@ -61,6 +63,8 @@ class LogicGateGameWindow(arcade.Window):
                             new_gate = OutputGateSprite(x = x, y = y, world = self)
                         if main_gate_sprite.gate_type == NOT_GATE:
                             new_gate = NotGateSprite(x = x, y = y, world = self)
+                        if main_gate_sprite.gate_type == AND_GATE:
+                            new_gate = AndGateSprite(x = x, y = y, world = self)
                         if main_gate_sprite.gate_type == OR_GATE:
                             new_gate = OrGateSprite(x = x , y = y, world = self)
                         self.gate_sprites.append(new_gate)
