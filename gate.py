@@ -8,6 +8,9 @@ OR_GATE = 4
 
 IMAGE_FILENAME = [None, None, None, None, None]
 IMAGE_FILENAME[INPUT_GATE] = 'images/input_gate.png'
+IMAGE_FILENAME[OUTPUT_GATE] = 'images/output_gate.png'
+IMAGE_FILENAME[NOT_GATE] = 'images/not_gate.png'
+IMAGE_FILENAME[AND_GATE] = 'images/and_gate.png'
 IMAGE_FILENAME[OR_GATE] = 'images/or_gate.png'
 
 class SpriteModel(arcade.Sprite):
@@ -59,11 +62,69 @@ class InputGateSprite(SpriteModel):
         self.output_down_margin = self.center_y + 28
         self.output_up_margin = self.center_y + 40
 
-    def get_output(self):
-        return self.output
+class OutputGateSprite(SpriteModel):
+    def __init__(self, *args, **kwargs):
+        args = (IMAGE_FILENAME[OUTPUT_GATE],) + args
 
-    def set_output(self, output):
-        self.output = output
+        self.down_input = False
+        self.gate_type = OUTPUT_GATE
+
+        super().__init__(*args, ** kwargs)
+
+    def update(self):
+        super().update()
+
+        self.input_left_margin = self.center_x - 8
+        self.input_right_margin = self.center_x + 10
+        self.input_up_margin = self.center_y - 28
+        self.input_down_margin = self.center_y - 40
+        self.center_x_input = self.input_left_margin - abs(self.input_left_margin - self.input_right_margin) / 2
+        self.center_y_input = self.input_down_margin - abs(self.input_down_margin - self.input_up_margin) / 2
+
+        for gate_sprite in self.world.gate_sprites:
+            if gate_sprite != self and gate_sprite.gate_type != OUTPUT_GATE:
+                self.input_plugged(gate_sprite)
+
+    def input_plugged(self, plugged_gate):
+        if self.is_point_intersect_with_output_of_gate(self.center_x_input, self.center_y_input, plugged_gate):
+            self.left_input = plugged_gate.output
+        else:
+            self.down_input = False
+
+class NotGateSprite(SpriteModel):
+    def __init__(self, *args, **kwargs):
+        args = (IMAGE_FILENAME[NOT_GATE],) + args
+
+        self.output = None
+        self.down_input = False
+        self.gate_type = NOT_GATE
+
+        super().__init__(*args, ** kwargs)
+
+    def update(self):
+        super().update()
+
+        self.output_left_margin = self.center_x - 8
+        self.output_right_margin = self.center_x + 10
+        self.output_down_margin = self.center_y + 28
+        self.output_up_margin = self.center_y + 40
+
+        self.input_left_margin = self.center_x - 8
+        self.input_right_margin = self.center_x + 10
+        self.input_up_margin = self.center_y - 28
+        self.input_down_margin = self.center_y - 40
+        self.center_x_input = self.input_left_margin - abs(self.input_left_margin - self.input_right_margin) / 2
+        self.center_y_input = self.input_down_margin - abs(self.input_down_margin - self.input_up_margin) / 2
+
+        for gate_sprite in self.world.gate_sprites:
+            if gate_sprite != self and gate_sprite.gate_type != OUTPUT_GATE:
+                self.input_plugged(gate_sprite)
+
+    def input_plugged(self, plugged_gate):
+        if self.is_point_intersect_with_output_of_gate(self.center_x_input, self.center_y_input, plugged_gate):
+            self.left_input = plugged_gate.output
+        else:
+            self.down_input = False
 
 class OrGateSprite(SpriteModel):
     def __init__(self, *args, **kwargs):
@@ -101,7 +162,7 @@ class OrGateSprite(SpriteModel):
         self.is_left_input_plugged = False
         self.is_right_input_plugged = False
         for gate_sprite in self.world.gate_sprites:
-            if gate_sprite != self:
+            if gate_sprite != self and gate_sprite.gate_type != OUTPUT_GATE:
                 self.input_plugged(gate_sprite)
 
         if not self.is_left_input_plugged:
@@ -121,9 +182,3 @@ class OrGateSprite(SpriteModel):
     def get_output(self):
         self.output =  self.left_input | self.right_input
         return self.output
-
-    def set_input(self, left_input = None, right_input = None):
-        if left_input != None:
-            self.left_input = left_input
-        if right_input != None:
-            self.right_input = right_input
