@@ -87,7 +87,7 @@ class OutputGateSprite(SpriteModel):
 
     def input_plugged(self, plugged_gate):
         if self.is_point_intersect_with_output_of_gate(self.center_x_input, self.center_y_input, plugged_gate):
-            self.left_input = plugged_gate.output
+            self.down_input = plugged_gate.output
         else:
             self.down_input = False
 
@@ -122,7 +122,7 @@ class NotGateSprite(SpriteModel):
 
     def input_plugged(self, plugged_gate):
         if self.is_point_intersect_with_output_of_gate(self.center_x_input, self.center_y_input, plugged_gate):
-            self.left_input = plugged_gate.output
+            self.down_input = plugged_gate.output
         else:
             self.down_input = False
 
