@@ -79,6 +79,11 @@ class LogicGateGameWindow(arcade.Window):
                 if gate_sprite.gate_type == INPUT_GATE and gate_sprite.is_mouse_on(x, y):
                     gate_sprite.output = not gate_sprite.output
 
+        if button == arcade.MOUSE_BUTTON_RIGHT:
+            for gate_sprite in self.gate_sprites:
+                if gate_sprite.is_mouse_on(x, y):
+                    self.gate_sprites.remove(gate_sprite)
+
     def on_mouse_release(self, x, y, button, modifiers):
         if button == arcade.MOUSE_BUTTON_LEFT:
             self.dragging = False
