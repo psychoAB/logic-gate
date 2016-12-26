@@ -41,9 +41,9 @@ class LogicGateGameWindow(arcade.Window):
             gate_sprite.update()
             gate_sprite.draw()
             if gate_sprite.gate_type == INPUT_GATE:
-                arcade.draw_text(str(gate_sprite.output), gate_sprite.center_x + 50, gate_sprite.center_y, arcade.color.BLACK)
+                arcade.draw_text(str(gate_sprite.output), gate_sprite.center_x - 20, gate_sprite.center_y - 50, arcade.color.BLACK)
             if gate_sprite.gate_type == OUTPUT_GATE:
-                arcade.draw_text(str(gate_sprite.down_input), gate_sprite.center_x + 50, gate_sprite.center_y, arcade.color.BLACK)
+                arcade.draw_text(str(gate_sprite.down_input), gate_sprite.center_x - 20, gate_sprite.center_y + 40, arcade.color.BLACK)
 
     def on_mouse_motion(self, x, y, dx, dy):
         if DEBUG:
