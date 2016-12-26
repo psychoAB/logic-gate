@@ -2,7 +2,7 @@
 
 import sys
 import arcade
-from gate import INPUT_GATE, OUTPUT_GATE, NOT_GATE, AND_GATE, OR_GATE, IMAGE_FILENAME, InputGateSprite, OutputGateSprite, NotGateSprite, AndGateSprite, OrGateSprite
+from gate import INPUT_GATE, OUTPUT_GATE, NOT_GATE, AND_GATE, OR_GATE, IMAGE_FILENAME, InputGateSprite, OutputGateSprite, NotGateSprite, AndGateSprite, OrGateSprite, SpriteModel
 
 SCREEN_WIDTH = 600
 SCREEN_HEIGHT = 600
@@ -21,6 +21,9 @@ class LogicGateGameWindow(arcade.Window):
         main_and_gate = AndGateSprite(x = 275, y = 100, world = self)
         main_or_gate = OrGateSprite(x = 350, y = 100, world = self)
 
+        self.how_to_play_button = SpriteModel('images/how_to_play_button.png', x = 490, y = 100, world = self)
+        self.how_to_play = SpriteModel('images/how_to_play.png', x = 300, y = 400, world = self)
+
         self.main_gate_sprites = [None, None, None, None, None]
         self.main_gate_sprites[INPUT_GATE] = main_input_gate
         self.main_gate_sprites[OUTPUT_GATE] = main_output_gate
@@ -28,6 +31,8 @@ class LogicGateGameWindow(arcade.Window):
         self.main_gate_sprites[AND_GATE] = main_and_gate
         self.main_gate_sprites[OR_GATE] = main_or_gate
 
+        self.x = SCREEN_WIDTH / 2
+        self.y = SCREEN_HEIGHT / 2
         self.dragging = False
 
     def on_draw(self):
@@ -45,6 +50,10 @@ class LogicGateGameWindow(arcade.Window):
             if gate_sprite.gate_type == OUTPUT_GATE:
                 arcade.draw_text(str(gate_sprite.down_input), gate_sprite.center_x - 20, gate_sprite.center_y + 40, arcade.color.BLACK)
 
+        self.how_to_play_button.draw()
+        if self.how_to_play_button.is_mouse_on(self.x, self.y):
+            self.how_to_play.draw()
+                
         arcade.draw_text('input', 30, 35, arcade.color.BLACK)
         arcade.draw_text('output', 105, 35, arcade.color.BLACK)
         arcade.draw_text('not', 190, 35, arcade.color.BLACK)
@@ -53,6 +62,9 @@ class LogicGateGameWindow(arcade.Window):
         arcade.draw_text('tools', 180, 10, arcade.color.BLACK)
 
     def on_mouse_motion(self, x, y, dx, dy):
+        self.x = x
+        self.y = y
+
         if DEBUG:
             print(str(x) + " " + str(y))
         pass
