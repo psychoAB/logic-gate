@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import sys
 import arcade
 from gate import INPUT_GATE, OUTPUT_GATE, NOT_GATE, AND_GATE, OR_GATE, IMAGE_FILENAME, InputGateSprite, OutputGateSprite, NotGateSprite, AndGateSprite, OrGateSprite
 
@@ -45,7 +46,8 @@ class LogicGateGameWindow(arcade.Window):
                 arcade.draw_text(str(gate_sprite.down_input), gate_sprite.center_x + 50, gate_sprite.center_y, arcade.color.BLACK)
 
     def on_mouse_motion(self, x, y, dx, dy):
-        #print(str(x) + " " + str(y))
+        if DEBUG:
+            print(str(x) + " " + str(y))
         pass
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
@@ -82,5 +84,10 @@ class LogicGateGameWindow(arcade.Window):
             self.dragging = False
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        DEBUG = sys.argv[1]
+    else:
+        DEBUG = False
+
     window = LogicGateGameWindow(SCREEN_WIDTH, SCREEN_HEIGHT)
     arcade.run()
