@@ -18,6 +18,8 @@ MIDDLE_CONNECTOR_RIGHT_FROM_CENTER = 10
 MIDDLE_CONNECTOR_DOWN_FROM_CENTER = 18
 MIDDLE_CONNECTOR_UP_FROM_CENTER = 30
 
+DEFAULT_OUTPUT = False
+DEFAULT_INPUT = None
 
 class SpriteModel(arcade.Sprite):
     def __init__(self, *args, **kwargs):
@@ -55,7 +57,7 @@ class InputGateSprite(SpriteModel):
     def __init__(self, *args, **kwargs):
         args = (IMAGE_FILENAME[INPUT_GATE],) + args
 
-        self.output = True
+        self.output = DEFAULT_OUTPUT
         self.gate_type = INPUT_GATE
 
         super().__init__(*args, ** kwargs)
@@ -72,7 +74,7 @@ class OutputGateSprite(SpriteModel):
     def __init__(self, *args, **kwargs):
         args = (IMAGE_FILENAME[OUTPUT_GATE],) + args
 
-        self.down_input = False
+        self.down_input = DEFAULT_INPUT
         self.gate_type = OUTPUT_GATE
 
         super().__init__(*args, ** kwargs)
@@ -95,14 +97,14 @@ class OutputGateSprite(SpriteModel):
         if self.is_point_intersect_with_output_of_gate(self.center_x_input, self.center_y_input, plugged_gate):
             self.down_input = plugged_gate.output
         else:
-            self.down_input = False
+            self.down_input = DEFAULT_INPUT
 
 class NotGateSprite(SpriteModel):
     def __init__(self, *args, **kwargs):
         args = (IMAGE_FILENAME[NOT_GATE],) + args
 
-        self.output = None
-        self.down_input = False
+        self.output = DEFAULT_OUTPUT
+        self.down_input = DEFAULT_INPUT
         self.gate_type = NOT_GATE
 
         super().__init__(*args, ** kwargs)
@@ -125,12 +127,18 @@ class NotGateSprite(SpriteModel):
         for gate_sprite in self.world.gate_sprites:
             if gate_sprite != self and gate_sprite.gate_type != OUTPUT_GATE:
                 self.input_plugged(gate_sprite)
+        
+        self.update_output()
 
     def input_plugged(self, plugged_gate):
         if self.is_point_intersect_with_output_of_gate(self.center_x_input, self.center_y_input, plugged_gate):
             self.down_input = plugged_gate.output
         else:
-            self.down_input = False
+            self.down_input = DEFAULT_INPUT
+
+    def update_output(self):
+        if self.down_input != DEFAULT_INPUT:
+            self.output = not self.down_input
 
 class AndGateSprite(SpriteModel):
     def __init__(self, *args, **kwargs):
@@ -139,9 +147,9 @@ class AndGateSprite(SpriteModel):
 
         args = (IMAGE_FILENAME[AND_GATE],) + args
 
-        self.output = None
-        self.left_input = False
-        self.right_input = False
+        self.output = DEFAULT_OUTPUT
+        self.left_input = DEFAULT_INPUT
+        self.right_input = DEFAULT_INPUT
         self.gate_type = AND_GATE
 
         super().__init__(*args, ** kwargs)
@@ -172,10 +180,12 @@ class AndGateSprite(SpriteModel):
                 self.input_plugged(gate_sprite)
 
         if not self.is_left_input_plugged:
-            self.left_input = 0
+            self.left_input = DEFAULT_INPUT
 
         if not self.is_right_input_plugged:
-            self.right_input = 0
+            self.right_input = DEFAULT_INPUT
+
+        self.update_output()
 
     def input_plugged(self, plugged_gate):
         if self.is_point_intersect_with_output_of_gate(self.center_x_left_input, self.center_y_input, plugged_gate):
@@ -185,9 +195,9 @@ class AndGateSprite(SpriteModel):
             self.right_input = plugged_gate.output
             self.is_right_input_plugged = True
 
-    def get_output(self):
-        self.output =  self.left_input | self.right_input
-        return self.output
+    def update_output(self):
+        if self.left_input != DEFAULT_INPUT or self.right_input != DEFAULT_INPUT:
+            self.output =  self.left_input & self.right_input
 
 class OrGateSprite(SpriteModel):
     def __init__(self, *args, **kwargs):
@@ -196,9 +206,9 @@ class OrGateSprite(SpriteModel):
 
         args = (IMAGE_FILENAME[OR_GATE],) + args
 
-        self.output = None
-        self.left_input = False
-        self.right_input = False
+        self.output = DEFAULT_OUTPUT
+        self.left_input = DEFAULT_INPUT
+        self.right_input = DEFAULT_INPUT
         self.gate_type = OR_GATE
 
         super().__init__(*args, ** kwargs)
@@ -229,10 +239,12 @@ class OrGateSprite(SpriteModel):
                 self.input_plugged(gate_sprite)
 
         if not self.is_left_input_plugged:
-            self.left_input = 0
+            self.left_input = DEFAULT_INPUT
 
         if not self.is_right_input_plugged:
-            self.right_input = 0
+            self.right_input = DEFAULT_INPUT
+
+        self.update_output()
 
     def input_plugged(self, plugged_gate):
         if self.is_point_intersect_with_output_of_gate(self.center_x_left_input, self.center_y_input, plugged_gate):
@@ -242,6 +254,6 @@ class OrGateSprite(SpriteModel):
             self.right_input = plugged_gate.output
             self.is_right_input_plugged = True
 
-    def get_output(self):
-        self.output =  self.left_input | self.right_input
-        return self.output
+    def update_output(self):
+        if self.left_input != DEFAULT_INPUT or self.right_input != DEFAULT_INPUT:
+            self.output =  self.left_input | self.right_input
