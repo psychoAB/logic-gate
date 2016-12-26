@@ -51,15 +51,16 @@ class LogicGateGameWindow(arcade.Window):
         pass
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
-        if self.dragging:
+        if buttons == arcade.MOUSE_BUTTON_LEFT:
+            self.dragging = False
+
             for gate_sprite in self.gate_sprites:
-                if gate_sprite.is_mouse_on(x, y):
+                if gate_sprite.is_mouse_on(x, y) and not self.dragging:
                     gate_sprite.set_position(x, y)
+                    self.dragging = True
 
     def on_mouse_press(self, x, y, button, modifiers):
         if button == arcade.MOUSE_BUTTON_LEFT:
-            self.dragging = True
-
             for main_gate_sprite in self.main_gate_sprites:
                 if main_gate_sprite != None:
                     if main_gate_sprite.is_mouse_on(x, y):
@@ -75,18 +76,18 @@ class LogicGateGameWindow(arcade.Window):
                             new_gate = OrGateSprite(x = x , y = y, world = self)
                         self.gate_sprites.append(new_gate)
 
-            for gate_sprite in self.gate_sprites:
-                if gate_sprite.gate_type == INPUT_GATE and gate_sprite.is_mouse_on(x, y):
-                    gate_sprite.output = not gate_sprite.output
-
         if button == arcade.MOUSE_BUTTON_RIGHT:
             for gate_sprite in self.gate_sprites:
                 if gate_sprite.is_mouse_on(x, y):
                     self.gate_sprites.remove(gate_sprite)
 
+        if button == arcade.MOUSE_BUTTON_MIDDLE:
+            for gate_sprite in self.gate_sprites:
+                if gate_sprite.gate_type == INPUT_GATE and gate_sprite.is_mouse_on(x, y):
+                    gate_sprite.output = not gate_sprite.output
+
     def on_mouse_release(self, x, y, button, modifiers):
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            self.dragging = False
+        pass
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
