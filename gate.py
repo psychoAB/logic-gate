@@ -13,6 +13,12 @@ IMAGE_FILENAME[NOT_GATE] = 'images/not_gate.png'
 IMAGE_FILENAME[AND_GATE] = 'images/and_gate.png'
 IMAGE_FILENAME[OR_GATE] = 'images/or_gate.png'
 
+MIDDLE_CONNECTOR_LEFT_FROM_CENTER = 8
+MIDDLE_CONNECTOR_RIGHT_FROM_CENTER = 10
+MIDDLE_CONNECTOR_DOWN_FROM_CENTER = 18
+MIDDLE_CONNECTOR_UP_FROM_CENTER = 30
+
+
 class SpriteModel(arcade.Sprite):
     def __init__(self, *args, **kwargs):
         x =  kwargs.pop('x', None)
@@ -57,10 +63,10 @@ class InputGateSprite(SpriteModel):
     def update(self):
         super().update()
 
-        self.output_left_margin = self.center_x - 8
-        self.output_right_margin = self.center_x + 10
-        self.output_down_margin = self.center_y + 28
-        self.output_up_margin = self.center_y + 40
+        self.output_left_margin = self.center_x - MIDDLE_CONNECTOR_LEFT_FROM_CENTER
+        self.output_right_margin = self.center_x + MIDDLE_CONNECTOR_RIGHT_FROM_CENTER
+        self.output_down_margin = self.center_y + MIDDLE_CONNECTOR_DOWN_FROM_CENTER
+        self.output_up_margin = self.center_y + MIDDLE_CONNECTOR_UP_FROM_CENTER
 
 class OutputGateSprite(SpriteModel):
     def __init__(self, *args, **kwargs):
@@ -74,12 +80,12 @@ class OutputGateSprite(SpriteModel):
     def update(self):
         super().update()
 
-        self.input_left_margin = self.center_x - 8
-        self.input_right_margin = self.center_x + 10
-        self.input_up_margin = self.center_y - 28
-        self.input_down_margin = self.center_y - 40
-        self.center_x_input = self.input_left_margin - abs(self.input_left_margin - self.input_right_margin) / 2
-        self.center_y_input = self.input_down_margin - abs(self.input_down_margin - self.input_up_margin) / 2
+        self.input_left_margin = self.center_x - MIDDLE_CONNECTOR_LEFT_FROM_CENTER
+        self.input_right_margin = self.center_x + MIDDLE_CONNECTOR_RIGHT_FROM_CENTER
+        self.input_up_margin = self.center_y - MIDDLE_CONNECTOR_DOWN_FROM_CENTER
+        self.input_down_margin = self.center_y - MIDDLE_CONNECTOR_UP_FROM_CENTER
+        self.center_x_input = self.input_left_margin + abs(self.input_left_margin - self.input_right_margin) / 2
+        self.center_y_input = self.input_down_margin + abs(self.input_down_margin - self.input_up_margin) / 2
 
         for gate_sprite in self.world.gate_sprites:
             if gate_sprite != self and gate_sprite.gate_type != OUTPUT_GATE:
@@ -104,17 +110,17 @@ class NotGateSprite(SpriteModel):
     def update(self):
         super().update()
 
-        self.output_left_margin = self.center_x - 8
-        self.output_right_margin = self.center_x + 10
-        self.output_down_margin = self.center_y + 28
-        self.output_up_margin = self.center_y + 40
+        self.output_left_margin = self.center_x - MIDDLE_CONNECTOR_LEFT_FROM_CENTER
+        self.output_right_margin = self.center_x + MIDDLE_CONNECTOR_RIGHT_FROM_CENTER
+        self.output_down_margin = self.center_y + MIDDLE_CONNECTOR_DOWN_FROM_CENTER
+        self.output_up_margin = self.center_y + MIDDLE_CONNECTOR_UP_FROM_CENTER
 
-        self.input_left_margin = self.center_x - 8
-        self.input_right_margin = self.center_x + 10
-        self.input_up_margin = self.center_y - 28
-        self.input_down_margin = self.center_y - 40
-        self.center_x_input = self.input_left_margin - abs(self.input_left_margin - self.input_right_margin) / 2
-        self.center_y_input = self.input_down_margin - abs(self.input_down_margin - self.input_up_margin) / 2
+        self.input_left_margin = self.center_x - MIDDLE_CONNECTOR_LEFT_FROM_CENTER
+        self.input_right_margin = self.center_x + MIDDLE_CONNECTOR_RIGHT_FROM_CENTER
+        self.input_up_margin = self.center_y - MIDDLE_CONNECTOR_DOWN_FROM_CENTER
+        self.input_down_margin = self.center_y - MIDDLE_CONNECTOR_UP_FROM_CENTER
+        self.center_x_input = self.input_left_margin + abs(self.input_left_margin - self.input_right_margin) / 2
+        self.center_y_input = self.input_down_margin + abs(self.input_down_margin - self.input_up_margin) / 2
 
         for gate_sprite in self.world.gate_sprites:
             if gate_sprite != self and gate_sprite.gate_type != OUTPUT_GATE:
@@ -144,10 +150,10 @@ class AndGateSprite(SpriteModel):
     def update(self):
         super().update()
 
-        self.output_left_margin = self.center_x - 8
-        self.output_right_margin = self.center_x + 10
-        self.output_down_margin = self.center_y + 28
-        self.output_up_margin = self.center_y + 40
+        self.output_left_margin = self.center_x - MIDDLE_CONNECTOR_LEFT_FROM_CENTER
+        self.output_right_margin = self.center_x + MIDDLE_CONNECTOR_RIGHT_FROM_CENTER
+        self.output_down_margin = self.center_y + MIDDLE_CONNECTOR_DOWN_FROM_CENTER
+        self.output_up_margin = self.center_y + MIDDLE_CONNECTOR_UP_FROM_CENTER
 
         self.left_input_left_margin = self.center_x - 20
         self.left_input_right_margin = self.center_x - 8
@@ -201,10 +207,10 @@ class OrGateSprite(SpriteModel):
     def update(self):
         super().update()
 
-        self.output_left_margin = self.center_x - 8
-        self.output_right_margin = self.center_x + 10
-        self.output_down_margin = self.center_y + 28
-        self.output_up_margin = self.center_y + 40
+        self.output_left_margin = self.center_x - MIDDLE_CONNECTOR_LEFT_FROM_CENTER
+        self.output_right_margin = self.center_x + MIDDLE_CONNECTOR_RIGHT_FROM_CENTER
+        self.output_down_margin = self.center_y + MIDDLE_CONNECTOR_DOWN_FROM_CENTER
+        self.output_up_margin = self.center_y + MIDDLE_CONNECTOR_UP_FROM_CENTER
 
         self.left_input_left_margin = self.center_x - 20
         self.left_input_right_margin = self.center_x - 8
