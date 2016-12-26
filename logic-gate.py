@@ -19,7 +19,7 @@ class LogicGateGameWindow(arcade.Window):
         main_output_gate = OutputGateSprite(x = 125, y = 89, world = self)
         main_not_gate = NotGateSprite(x = 200, y = 100, world = self)
         main_and_gate = AndGateSprite(x = 275, y = 100, world = self)
-        main_or_gate = OrGateSprite(x = 350, y = 89, world = self)
+        main_or_gate = OrGateSprite(x = 350, y = 100, world = self)
 
         self.main_gate_sprites = [None, None, None, None, None]
         self.main_gate_sprites[INPUT_GATE] = main_input_gate
