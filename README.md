@@ -2,7 +2,7 @@
 
 My OOP-Laboratory project using Arcade libary
 
-###How to play
+### How to play
 
 ![alt text][how-to-play]
 
