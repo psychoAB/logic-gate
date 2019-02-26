@@ -1,6 +1,6 @@
 # logic-gate
 
-My OOP-Laboratory project using Arcade libary
+My OOP-Laboratory project using [Arcade library](https://pypi.org/project/arcade)
 
 ### How to play
 
