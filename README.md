@@ -1,10 +1,13 @@
 # logic-gate
 
-My OOP-Laboratory project using [Arcade library](https://pypi.org/project/arcade)
+##### description:
+###### My OOP-Laboratory project using [Arcade](https://pypi.org/project/arcade)
+
+___
 
 ### How to play:
 
-![click here!][how-to-play]
+![logic gate attributes!][how-to-play]
 
 [how-to-play]: https://github.com/psychoAB/logic-gate/blob/master/images/how_to_play_gate.png
 
