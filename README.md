@@ -5,6 +5,20 @@
 
 ___
 
+### Requirement:
+* [Arcade](https://pypi.org/project/arcade) - __Arcade__ is an easy-to-learn Python library for creating 2D video games.
+* [freeGLUT3-dev](http://freeglut.sourceforge.net/)
+```bash
+pip install -r requirements.txt
+apt-get install freeglut3-dev
+```
+or
+```bash
+pip install arcade==1.3.7
+apt-get install freeglut3-dev
+```
+may require superuser privilege
+
 ### How to play:
 
 ![logic gate attributes!][how-to-play]
